@@ -1,0 +1,205 @@
+package com.workflow2;
+
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class PizzaHutCoupon_Code {
+	WebDriver driver;
+	public String verificationError = "";
+
+	@BeforeMethod
+	public void beforemethod() throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("disable-geolocation");
+		driver = new ChromeDriver(options);
+
+		// Launch the browser
+		driver.manage().window().maximize();
+		driver.get("https://www.pizzahut.co.in/");
+
+		// select the location
+		WebElement sel = driver.findElement(By.xpath("(//input[@type='text'])"));
+		sel.sendKeys("jnmc");
+		Thread.sleep(3000);
+		sel.sendKeys(Keys.ENTER);
+	}
+
+	  @Test(priority=0)
+	    public void Coupon_Code1() throws InterruptedException
+	    {
+		  try {
+	        //click on voucher
+	        Thread.sleep(4000);
+	        driver.findElement(By.xpath("//*[@id=\"basket\"]/div[1]/button/div/span[2]")).click();
+	        //apply coupon code
+	        driver.findElement(By.name("voucherId")).sendKeys("HUT125");	        
+	        //click on redeem
+	        driver.findElement(By.xpath("//button[@type='submit']")).click();
+	        Thread.sleep(5000);   
+	        //click on OK
+	        driver.findElement(By.xpath("//button[@class='button button--green mb-10']")).click();
+	        Thread.sleep(3000);     
+	        //click on pizza more than 500
+	        driver.findElement(By.xpath("(//button[@class='button button--md button--green flex-1 font-semibold'])[2]")).click();
+	        //Screenshot
+	        TakesScreenshot ts=(TakesScreenshot)driver;
+	        File src=ts.getScreenshotAs(OutputType.FILE);
+	        File trg=new File(".\\Screenshot\\Coupon_Code1.png");
+	        FileUtils.copyFile(src,trg);
+	        Thread.sleep(5000); 
+	        // validation of voucher code
+	        String actual = "Voucher applied! Rs. 125 Off on bill value above Rs.500.";  
+	        //Final Validation
+	        if (driver.findElement(By.xpath("//*[@id=\"basket\"]/div[1]/div/div/div[1]")).getText().equals(actual)) {
+	            System.out.println("User is successfully able to apply the voucher for purchasing the pizza greter than Rs.500");
+	        } else {
+	            System.out.println("User is not able to apply the coupon");
+	        }  
+                     
+   }  
+		  catch (Exception ex) {
+				verificationError = ex.getMessage();
+				System.out.println("Caught Error Message : " + verificationError);
+			}
+		}
+	  @Test(priority=1)
+	  public void Coupon_Code2() throws InterruptedException {
+		  try {
+		  
+		  Thread.sleep(4000);
+		     driver.findElement(By.xpath("//*[@id=\"basket\"]/div[1]/button/div/span[2]")).click();
+		        //apply coupon code
+		        driver.findElement(By.name("voucherId")).sendKeys("HUT125");
+		        //click on redeem
+		        driver.findElement(By.xpath("//button[@type='submit']")).click();
+		        Thread.sleep(5000);
+		        //click on OK
+		        driver.findElement(By.xpath("//button[@class='button button--green mb-10']")).click();
+		        Thread.sleep(3000);
+		        //Click on pizza less than 500
+		        driver.findElement(By.xpath("//*[@id=\"app\"]/div/div[1]/div[1]/div[4]/div[2]/div[2]/span/div[1]/a[1]/div[3]/div/button/span[1]/span")).click();
+		        //Screenshot
+		        TakesScreenshot ts=(TakesScreenshot)driver;
+		        File src=ts.getScreenshotAs(OutputType.FILE);
+		        File trg=new File(".\\Screenshot\\Coupon_Code2.png");
+		        FileUtils.copyFile(src,trg);
+		        Thread.sleep(3000);
+		        String actual = "Voucher applied! Rs. 125 Off on bill value above Rs.500.";
+		        //Final Validation
+		        if (driver.findElement(By.xpath("//*[@id=\"basket\"]/div[1]/div/div/div[1]")).getText().equals(actual)) {
+		            System.out.println("User is successfully able to apply the voucher for purchasing the pizza greter than Rs.500");
+		        } else {
+		            System.out.println("User is not able to apply the coupon");
+		        }  
+	   } 
+		  catch (Exception ex) {
+				verificationError = ex.getMessage();
+				System.out.println("Caught Error Message : " + verificationError);
+			}
+		}
+	   @Test(priority=2)
+	   public void Coupon_Code3() throws InterruptedException {
+		   try {
+	   Thread.sleep(4000);
+	     driver.findElement(By.xpath("//*[@id=\"basket\"]/div[1]/button/div/span[2]")).click();
+	        //apply coupon code
+	        driver.findElement(By.name("voucherId")).sendKeys("HUT125");	        
+	        //click on redeem
+	        driver.findElement(By.xpath("//button[@type='submit']")).click();
+	        Thread.sleep(5000);
+	        //click on OK
+	        driver.findElement(By.xpath("//button[@class='button button--green mb-10']")).click();
+	        Thread.sleep(3000);
+	        //click on pizza price of 539
+	        driver.findElement(By.xpath("//*[@id=\"app\"]/div/div[1]/div[1]/div[4]/div[2]/div[2]/span/div[1]/a[2]/div[3]/div/button/span[1]/span")).click();
+	        //Screenshot
+	        TakesScreenshot ts=(TakesScreenshot)driver;
+	        File src=ts.getScreenshotAs(OutputType.FILE);
+	        File trg=new File(".\\Screenshot\\Coupon_Code3.png");
+	        FileUtils.copyFile(src,trg);
+	        Thread.sleep(3000);
+	        //click on pizza price of 603
+	        driver.findElement(By.xpath("//*[@id=\"app\"]/div/div[1]/div[1]/div[4]/div[2]/div[2]/span/div[1]/a[3]/div[3]/div/button/span[1]/span")).click();
+	        String actual = "Voucher applied! Rs. 125 Off on bill value above Rs.500.";
+	        //Final Validation
+	        if (driver.findElement(By.xpath("//*[@id=\"basket\"]/div[1]/div/div/div[1]")).getText().equals(actual)) {
+	            System.out.println("User is successfully able to apply the voucher for purchasing the pizza greter than Rs.500");
+	        } else {
+	            System.out.println("User is not able to apply the coupon");
+	        }  
+   }   
+		   catch (Exception ex) {
+				verificationError = ex.getMessage();
+				System.out.println("Caught Error Message : " + verificationError);
+			}
+		}
+	@Test(priority = 3)
+	public void Coupon_Code4() throws InterruptedException {
+		try {
+			Thread.sleep(4000);
+			driver.findElement(By.xpath("//*[@id=\"basket\"]/div[1]/button/div/span[2]")).click();
+			// apply coupon code
+			driver.findElement(By.name("voucherId")).sendKeys("HUT125");
+			// click on redeem
+			driver.findElement(By.xpath("//button[@type='submit']")).click();
+			Thread.sleep(5000);
+			// click on OK
+			driver.findElement(By.xpath("/html/body/div[6]/div/div/div/div/div/button/span")).click();
+			Thread.sleep(3000);
+			driver.findElement(By.xpath("(//span[text()='Sides'])[2]")).click();
+			// 149
+			driver.findElement(By.xpath(
+					"//*[@id=\"app\"]/div/div[1]/div[1]/div[4]/div[2]/div[2]/span/div/a[1]/div[3]/div/button/span[1]/span"))
+					.click();
+			// 169
+			driver.findElement(By.xpath(
+					"//*[@id=\"app\"]/div/div[1]/div[1]/div[4]/div[2]/div[2]/span/div/a[2]/div[3]/div/button/span[1]/span"))
+					.click();
+			// 189
+			driver.findElement(By.xpath(
+					"//*[@id=\"app\"]/div/div[1]/div[1]/div[4]/div[2]/div[2]/span/div/a[3]/div[3]/div/button/span[1]/span"))
+					.click();
+			// 149
+			driver.findElement(By.xpath(
+					"//*[@id=\"app\"]/div/div[1]/div[1]/div[4]/div[2]/div[2]/span/div/a[4]/div[3]/div/button/span[1]/span"))
+					.click();
+			// Screenshot
+			TakesScreenshot ts = (TakesScreenshot) driver;
+			File src = ts.getScreenshotAs(OutputType.FILE);
+			File trg = new File(".\\Screenshot\\Coupon_Code2.png");
+			FileUtils.copyFile(src, trg);
+			Thread.sleep(3000);
+			String actual = "Voucher applied! Rs. 125 Off on bill value above Rs.500.";
+			if (driver.findElement(By.xpath("//*[@id=\"basket\"]/div[1]/div/div/div[1]")).getText().equals(actual)) {
+				System.out.println(
+						"User is successfully able to apply the voucher for purchasing the pizza greter than Rs.500");
+			} else {
+				System.out.println("User is not able to apply the coupon");
+			}
+		} catch (Exception ex) {
+			verificationError = ex.getMessage();
+			System.out.println("Caught Error Message : " + verificationError);
+		}
+	}
+
+	@AfterMethod
+	public void teardown() {
+		driver.close();
+
+	}
+}
